@@ -9,16 +9,21 @@ using namespace std;
 // Using a class
 class Permutations {
 public:
-  Permutations(int length);
+  Permutations(int variables, int length);
   void print_perms(vector<int> curr);
 
 private:
   int _len;
-  vector<int> alpha = {0, 1};
-  void gen_perms(vector<int> current);
+  vector<int> _alpha = {};
+  void gen_perms(vector<int> curr);
 };
 
-Permutations::Permutations(int length) {
+Permutations::Permutations(int variables, int length) {
+  _len = length;
+
+  for (int i = 0; i < variables; ++i) {
+    _alpha.push_back(i);
+  }
   _len = length;
   vector<int> curr;
   gen_perms(curr);
@@ -31,16 +36,16 @@ void Permutations::print_perms(vector<int> curr) {
   cout << endl;
 }
 
-void Permutations::gen_perms(vector<int> current) {
-  if (current.size() == _len) {
-    print_perms(current);
+void Permutations::gen_perms(vector<int> curr) {
+  if (curr.size() == _len) {
+    print_perms(curr);
     return;
   }
   
-  for (int number : alpha) {
-    current.push_back(number);
-    gen_perms(current);
-    current.pop_back();
+  for (int number : _alpha) {
+    curr.push_back(number);
+    gen_perms(curr);
+    curr.pop_back();
   }
 }
 
@@ -49,18 +54,18 @@ void Permutations::gen_perms(vector<int> current) {
 // vector<string> gen_perms(int variables, size_t length) {
 //   static vector<string> perms;
 //   static size_t len = length;
-//   static vector<string> alphabet;
-//   alphabet.resize(variables);
+//   static vector<string> _alphabet;
+//   _alphabet.resize(variables);
 //   for (size_t v = 0; v < variables; ++v) {
-//     alphabet.push_back();
+//     _alphabet.push_back();
 //   }
-//   for (auto _ : alphabet)
+//   for (auto _ : _alphabet)
 //     cout << _ << " ";
 //   cout << endl;
 //   return perms;
 // }
 
 int main() {
-  Permutations p(3);  
+  Permutations p(2, 4);  
   return 0;
 }
