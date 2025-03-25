@@ -10,26 +10,37 @@ using namespace std;
 class Permutations {
 public:
   Permutations(int length);
+  void print_perms(vector<int> curr);
 
 private:
   int _len;
-  vector<char> alpha = {'0', '1'};
-  void gen_perms(string current);
+  vector<int> alpha = {0, 1};
+  void gen_perms(vector<int> current);
 };
 
 Permutations::Permutations(int length) {
   _len = length;
-  gen_perms("");
+  vector<int> curr;
+  gen_perms(curr);
 }
 
-void Permutations::gen_perms(string current) {
-  if (current.length() == _len) {
-    cout << current << endl;
+void Permutations::print_perms(vector<int> curr) {
+  for (auto const & _ : curr) {
+    cout << _;
+  }
+  cout << endl;
+}
+
+void Permutations::gen_perms(vector<int> current) {
+  if (current.size() == _len) {
+    print_perms(current);
     return;
   }
   
-  for (char letter : alpha) {
-    gen_perms(current + letter);
+  for (int number : alpha) {
+    current.push_back(number);
+    gen_perms(current);
+    current.pop_back();
   }
 }
 
@@ -50,6 +61,6 @@ void Permutations::gen_perms(string current) {
 // }
 
 int main() {
-  Permutations p(2);  
+  Permutations p(3);  
   return 0;
 }
